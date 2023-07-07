@@ -1,2 +1,1 @@
-# Codam_libft
-C library with functions used for projects during my Codam curriculum.
+This folder contains a library containing many functions I coded myself that I will use throughout the rest of the projects.
