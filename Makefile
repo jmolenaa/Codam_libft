@@ -1,14 +1,14 @@
 NAME = libft.a
-SRC_FILES =	is/ft_isalpha.c is/ft_isdigit.c is/ft_isalnum.c is/ft_isascii.c is/ft_isprint.c\
-			str/ft_strlen.c str/ft_strchr.c str/ft_strrchr.c str/ft_strncmp.c str/ft_strnstr.c str/ft_atoi.c\
-			chnstr/ft_strlcpy.c chnstr/ft_strlcat.c chnstr/ft_toupper.c chnstr/ft_tolower.c chnstr/ft_striteri.c\
-			mem/ft_bzero.c mem/ft_memcpy.c mem/ft_memmove.c mem/ft_memset.c mem/ft_memchr.c mem/ft_memcmp.c\
-			crtstr/ft_calloc.c crtstr/ft_strdup.c crtstr/ft_substr.c crtstr/ft_strjoin.c crtstr/ft_strtrim.c crtstr/ft_split.c crtstr/ft_itoa.c crtstr/ft_strmapi.c\
-			fd/ft_putchar_fd.c fd/ft_putstr_fd.c fd/ft_putendl_fd.c fd/ft_putnbr_fd.c\
-			lst/ft_lstnew_bonus.c lst/ft_lstadd_front_bonus.c lst/ft_lstsize_bonus.c lst/ft_lstlast_bonus.c lst/ft_lstadd_back_bonus.c lst/ft_lstdelone_bonus.c lst/ft_lstclear_bonus.c lst/ft_lstiter_bonus.c lst/ft_lstmap_bonus.c
-OBJFILES = $(SRC_FILES:%.c=obj/%.o)
+SRC_FILES_LIBFT =	ft_is_functions.c ft_str_functions.c ft_atoi.c ft_change_str_functions.c\
+					ft_mem_functions.c ft_split.c ft_itoa.c ft_alloc_functions.c ft_str_join_functions.c\
+					ft_put_char_str_fd.c ft_putnbr_fd.c ft_sing_list_functions1.c ft_sing_list_functions2.c\
+					ft_array_functions.c ft_safe_alloc_and_free_null.c ft_dbl_list_functions1.c ft_dbl_list_functions2.c
+SRC_FILES_GNL =		get_next_line.c get_next_line_utils.c
+SRC_FILES_PRINTF =	char_conversion.c decimal_conversion.c flag_functions.c flag_validate.c ft_printf.c helper_functions.c\
+					hexa_conversion.c percent_conversion.c pointer_conversion.c string_conversion.c unsigned_conversion.c validation.c
+OBJFILES = $(SRC_FILES_LIBFT:%.c=obj/libft/%.o) $(SRC_FILES_GNL:%.c=obj/get_next_line/%.o) $(SRC_FILES_PRINTF:%.c=obj/printf/%.o)
 OBJDIR = obj
-DIRECTORIES = obj obj/is obj/str obj/chnstr/ obj/mem obj/crtstr/ obj/fd obj/lst
+DIRECTORIES = obj obj/libft obj/libft/chnstr/ obj/libft/mem obj/libft/lst obj/get_next_line obj/printf
 CFLAGS ?= -Wall -Wextra -Werror
 CC = cc
 LIGHTGREEN=\033[1;32m
@@ -24,7 +24,7 @@ $(NAME): $(OBJFILES)
 	@echo " |S|u|c|c|e|s|";
 	@echo " +-+-+-+-+-+-+${EXIT}";
 
-obj/%.o: src/%.c | $(OBJDIR)
+obj/%.o: src/%.c $(OBJDIR)
 	@$(CC) -iquote includes -c $(CFLAGS) -o $@ $<
 
 $(OBJDIR):
