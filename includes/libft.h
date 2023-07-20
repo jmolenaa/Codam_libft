@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/07 09:29:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/20 13:30:20 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/20 13:49:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,7 +398,7 @@ void		ft_lstiter_dbl(t_list_dbl *lst, void (*f)(void *));
 /**
  * Writes given message on the standard error and then exits with errno
 */
-void	ft_exit_with_error(char *str);
+void	ft_exit_with_error(char *str, int error_code);
 
 	//Get next line
 
