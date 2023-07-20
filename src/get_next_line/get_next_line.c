@@ -6,142 +6,89 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/12 16:36:41 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/13 08:31:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/20 11:30:24 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
-#include <limits.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
 
-int			strlenornewline(char *str, int newlineornot);
-char		*substr(char *str, int start, int newlineornot, int freecheck);
-t_line		*freeing(t_line *strlist, char **strtemp);
-int			stringcpy(char *dest, char *src, int size);
+int		strlenornewline(char *str, int check);
+char	*join(char *str, char *buff, int check);
+char	*substr(char **strtemp, int strtemplenornewline);
+char	*freeing(char **str, char **strtemp);
+void	stringcpy(char *dest, char *src, int size);
 
-char	*createreturnstring(t_line *strlist)
-{
-	char	*retstr;
-	int		totallen;
-	int		i;
-	t_line	*temp;
-
-	totallen = 0;
-	temp = strlist;
-	while (temp != (NULL))
-	{
-		totallen = totallen + strlenornewline(temp->str, 0);
-		temp = temp->next;
-	}
-	retstr = (char *)malloc((totallen + 1) * sizeof(char));
-	if (retstr == (NULL))
-		return (freeing(strlist, (NULL)), (NULL));
-	*(retstr + totallen) = '\0';
-	temp = strlist;
-	while (temp != (NULL))
-	{
-		i = strlenornewline(temp->str, 0);
-		totallen = totallen - stringcpy(retstr + totallen - i, temp->str, i);
-		temp = temp->next;
-	}
-	freeing(strlist, (NULL));
-	return (retstr);
-}
-
-t_line	*addnode(t_line *head, char *buff)
-{
-	t_line	*newnode;
-
-	newnode = (t_line *)malloc(sizeof(t_line));
-	if (newnode == (NULL))
-	{
-		freeing(head, NULL);
-		return (NULL);
-	}
-	newnode->str = substr(buff, 0, 1, 0);
-	if (newnode->str == (NULL))
-	{
-		freeing(head, NULL);
-		free(newnode);
-		return (NULL);
-	}
-	newnode->next = head;
-	return (newnode);
-}
-
-t_line	*nextlinenobuffer(int fd, t_line *strlist, char **strtemp)
+char	*nextlinenobuffer(int fd, char *str, char **strtemp, char *buff)
 {
 	int		i;
 	int		check;
-	char	buff[BUFFER_SIZE + 1];
 
 	i = 1;
 	while (i)
 	{
 		i = read(fd, buff, BUFFER_SIZE);
 		if (i == -1)
-			return (freeing(strlist, (NULL)));
-		*(buff + i) = '\0';
-		strlist = addnode(strlist, buff);
-		if (strlist == (NULL))
-			return (NULL);
-		check = strlenornewline(buff, 1);
+			return (freeing(&str, strtemp));
+		check = strlenornewline(buff, i);
 		if (check < i)
 		{
-			*strtemp = substr(buff, check + 1, 0, 0);
+			str = join(str, buff, check + 1);
+			if (str == (NULL))
+				return (freeing(&str, strtemp));
+			*strtemp = join(*strtemp, buff + check + 1, i - check - 1);
 			if (*strtemp == (NULL))
-				return (freeing(strlist, (NULL)));
-			return (strlist);
+				return (freeing(&str, strtemp));
+			return (str);
 		}
+		str = join(str, buff, check);
+		if (str == (NULL))
+			return (freeing(&str, strtemp));
 	}
-	return (strlist);
+	return (str);
 }
 
-t_line	*nextlinewithbuffer(char **strtemp, t_line *strlist)
+char	*nextlinewithbuffer(char **strtemp, char **str)
 {
 	int	strtemplenornewline;
 
-	strtemplenornewline = strlenornewline(*strtemp, 1);
+	strtemplenornewline = strlenornewline(*strtemp, BUFFER_SIZE);
+	*str = join(*str, *strtemp, strtemplenornewline + 1);
+	if (*str == (NULL))
+		return (freeing(str, strtemp));
 	if (*(*strtemp + strtemplenornewline) == '\n')
 	{
-		strlist = addnode(strlist, *strtemp);
-		if (strlist == (NULL))
-			return (freeing(NULL, strtemp));
-		*strtemp = substr(*strtemp, strtemplenornewline + 1, 0, 1);
+		*strtemp = substr(strtemp, strtemplenornewline + 1);
 		if (*strtemp == (NULL))
-			return (freeing(strlist, (NULL)));
-		return (strlist);
+			freeing(str, strtemp);
+		return (NULL);
 	}
-	strlist = addnode(strlist, *strtemp);
-	freeing(NULL, strtemp);
-	return (strlist);
+	else
+		freeing(NULL, strtemp);
+	return (*str);
 }
 
 char	*get_next_line(int fd)
 {
-	t_line		*strlist;
-	char		*retstr;
-	static char	*strtemp[OPEN_MAX];
+	char		*str;
+	static char	*strtemp = (NULL);
+	char		buff[BUFFER_SIZE];
 
-	if (fd < 0 || fd > OPEN_MAX)
+	if (fd < 0 || fd > FD_SETSIZE)
 		return (NULL);
-	strlist = (NULL);
-	if (*(strtemp + fd) != (NULL))
+	str = (NULL);
+	if (strtemp != (NULL))
 	{
-		strlist = nextlinewithbuffer(strtemp + fd, strlist);
-		if (*(strtemp + fd) == (NULL) && strlist != (NULL))
-			strlist = nextlinenobuffer(fd, strlist, strtemp + fd);
+		if (nextlinewithbuffer(&strtemp, &str) == (NULL))
+			return (str);
 	}
-	else
-		strlist = nextlinenobuffer(fd, strlist, strtemp + fd);
-	if (strlist == (NULL))
-		return (NULL);
-	retstr = createreturnstring(strlist);
-	if (retstr == (NULL))
-		return (freeing((NULL), strtemp + fd), (NULL));
-	if ((*(strtemp + fd) != (NULL) && *(*(strtemp + fd)) == '\0'))
-		freeing(NULL, strtemp + fd);
-	if (retstr != (NULL) && *retstr == '\0')
-		return (free(retstr), (NULL));
-	return (retstr);
+	str = nextlinenobuffer(fd, str, &strtemp, buff);
+	if (str != (NULL) && *str == '\0')
+		return (freeing(&str, &strtemp));
+	if ((strtemp != (NULL) && *strtemp == '\0'))
+		freeing(NULL, &strtemp);
+	return (str);
 }

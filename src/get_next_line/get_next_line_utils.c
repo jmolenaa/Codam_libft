@@ -6,26 +6,25 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/13 20:22:09 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/12 13:47:51 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/20 11:30:45 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
+#include <unistd.h>
 
-t_line	*freeing(t_line *strlist, char **strtemp)
+char	*freeing(char **str, char **strtemp)
 {
-	int		j;
-	t_line	*temp;
-
-	j = 0;
-	while (strlist != (NULL))
+	if (str != (NULL))
 	{
-		temp = strlist;
-		free(strlist->str);
-		strlist = strlist->next;
-		free(temp);
+		if (*str != (NULL))
+		{
+			free(*str);
+			*str = (NULL);
+		}
 	}
-	if (strtemp != (NULL) && *strtemp != (NULL))
+	if (*strtemp != (NULL))
 	{
 		free(*strtemp);
 		*strtemp = (NULL);
@@ -33,7 +32,7 @@ t_line	*freeing(t_line *strlist, char **strtemp)
 	return (NULL);
 }
 
-int	stringcpy(char *dest, char *src, int size)
+void	stringcpy(char *dest, char *src, int size)
 {
 	int	i;
 
@@ -43,42 +42,60 @@ int	stringcpy(char *dest, char *src, int size)
 		*(dest + i) = *(src + i);
 		i++;
 	}
-	return (i);
+	*(dest + i) = '\0';
 }
 
-int	strlenornewline(char *str, int newlineorrnot)
+char	*substr(char **strtemp, int strtemplenornewline)
+{
+	int		i;
+	char	*substr;
+
+	i = 0;
+	while (*(*strtemp + strtemplenornewline + i) != '\0')
+		i++;
+	substr = (char *)malloc((i + 1) * sizeof(char));
+	if (substr == (NULL))
+	{
+		free(*strtemp);
+		return (NULL);
+	}
+	stringcpy(substr, *strtemp + strtemplenornewline, BUFFER_SIZE);
+	free(*strtemp);
+	return (substr);
+}
+
+int	strlenornewline(char *str, int i)
 {
 	int	check;
 
 	check = 0;
-	while (*(str + check) != '\0')
+	while (check < i && *(str + check) != '\0')
 	{
-		if (*(str + check) == '\n' && newlineorrnot == 1)
+		if (*(str + check) == '\n')
 			return (check);
 		check++;
 	}
 	return (check);
 }
 
-char	*substr(char *str, int start, int newlineornot, int freecheck)
+char	*join(char *str, char *buff, int check)
 {
-	char	*substr;
-	int		length;
 	int		i;
+	char	*joined;
 
-	length = strlenornewline(str, newlineornot);
-	if (*(str + length) == '\n')
-		length++;
-	substr = (char *)malloc((length + 1) * sizeof(char));
-	if (substr == (NULL))
+	i = 0;
+	while (str && *(str + i) != '\0')
+		i++;
+	joined = (char *)malloc((i + check + 1) * sizeof(char));
+	if (joined == (NULL))
 	{
-		if (freecheck)
+		if (str != (NULL))
 			free(str);
 		return (NULL);
 	}
-	i = stringcpy(substr, str + start, length);
-	*(substr + i) = '\0';
-	if (freecheck)
+	stringcpy(joined, str, i);
+	stringcpy(joined + i, buff, check);
+	if (str != (NULL))
 		free(str);
-	return (substr);
+	return (joined);
 }
