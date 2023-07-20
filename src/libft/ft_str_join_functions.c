@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/14 14:07:51 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/13 08:29:25 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/20 13:22:56 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s3;
-	int		i;
 
 	if (s1 == (NULL) || s2 == (NULL))
 		return (NULL);
-	i = 0;
 	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
 		return (NULL);
@@ -31,11 +29,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 char	*ft_strjoin_free_first(char const *s1, char const *s2)
 {
 	char	*s3;
-	int		i;
 
 	if (s1 == (NULL) || s2 == (NULL))
 		return (NULL);
-	i = 0;
 	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
 		return (NULL);
@@ -48,11 +44,9 @@ char	*ft_strjoin_free_first(char const *s1, char const *s2)
 char	*ft_strjoin_free_second(char const *s1, char const *s2)
 {
 	char	*s3;
-	int		i;
 
 	if (s1 == (NULL) || s2 == (NULL))
 		return (NULL);
-	i = 0;
 	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
 		return (NULL);
@@ -65,11 +59,9 @@ char	*ft_strjoin_free_second(char const *s1, char const *s2)
 char	*ft_strjoin_free_both(char const *s1, char const *s2)
 {
 	char	*s3;
-	int		i;
 
 	if (s1 == (NULL) || s2 == (NULL))
 		return (NULL);
-	i = 0;
 	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
 		return (NULL);
