@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/07 09:29:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/13 08:31:30 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/20 10:55:52 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
-# include <stdarg.h>
-
-	//Libft
+# include "ft_printf.h"
 
 typedef struct s_list
 {
@@ -418,52 +416,16 @@ typedef struct s_line
 */
 char		*get_next_line(int fd);
 
-	//Printf
-
-typedef struct s_string
-{
-	char	*converstr;
-	char	*flagstr;
-}			t_string;
-
-typedef struct s_flags
-{
-	int	minusflag;
-	int	zeroflag;
-	int	poundflag;
-	int	spaceflag;
-	int	plusflag;
-	int	width;
-	int	prec;
-}		t_flags;
-
-typedef struct s_sign
-{
-	int		is;
-	char	sign;
-}			t_sign;
-
+/**
+ * Writes to the standard output according to the format string 's'
+ * The format string contains normal characters and conversions
+ * introduced by the % character
+ * The conversion will substitute the next aprameter of the function
+ * in the spot the % character was.
+ * Supported conversions are: d, i, s, c, x, X, %
+ * Supported flags are: +, -, ' ', #, precision and width
+ * Lookup the printf manual for moe information
+*/
 int			ft_printf(const char *s, ...);
-t_string	setmainstrings(void);
-int			validateinputnormal(char const *s, t_string main);
-int			looptillpercentsign(const char *s, int i);
-void		setflagsnothing(t_flags *f);
-char		*makeargumentstr(const char *s, int i, va_list ap, t_flags *f);
-int			settingflags(t_string main, t_flags *f, int i, const char *s);
-void		settingsign(t_flags *f, int dec, t_sign *s);
-char		*itoabase(long unsigned int nbr, char *base, int sign);
-int			validateinput(char const *s, t_string main, t_flags *f);
-int			checkifzeroflagvalid(int i, const char *s, t_flags *f);
-int			checkifpoundflagvalid(int i, const char *s, t_flags *f);
-int			checkifspaceandplusflagvalid(int i, const char *s, t_flags *f);
-int			checkifprecisionflagvalid(int i, const char *s, t_flags *f);
-int			validatemultipleflags(t_flags *f);
-char		*conversiontochar(va_list ap, t_flags *f);
-char		*conversiontostring(va_list ap, t_flags *f);
-char		*conversiontopointer(va_list ap, t_flags *f);
-char		*conversiontodecimal(va_list ap, t_flags *f);
-char		*conversiontounsigned(va_list ap, t_flags *f);
-char		*conversiontohexa(va_list ap, t_flags *f, char c);
-char		*conversiontopercent(t_flags *f);
 
 #endif
