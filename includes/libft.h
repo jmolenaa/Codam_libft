@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/07 09:29:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/20 10:55:52 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/20 13:30:20 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,6 +394,11 @@ void		ft_lstclear_dbl(t_list_dbl **lst, void (*del)(void *));
  * Iterates through the list and applies the function 'f' to every node
 */
 void		ft_lstiter_dbl(t_list_dbl *lst, void (*f)(void *));
+
+/**
+ * Writes given message on the standard error and then exits with errno
+*/
+void	ft_exit_with_error(char *str);
 
 	//Get next line
 

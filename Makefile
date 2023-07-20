@@ -1,5 +1,5 @@
 NAME = libft.a
-SRC_FILES_LIBFT =	ft_is_functions.c ft_str_functions.c ft_atoi.c ft_change_str_functions.c\
+SRC_FILES_LIBFT =	ft_is_functions.c ft_str_functions.c ft_atoi.c ft_change_str_functions.c ft_error.c\
 					ft_mem_functions.c ft_split.c ft_itoa.c ft_alloc_functions.c ft_str_join_functions.c\
 					ft_put_char_str_fd.c ft_putnbr_fd.c ft_sing_list_functions1.c ft_sing_list_functions2.c\
 					ft_array_functions.c ft_safe_alloc_and_free_null.c ft_dbl_list_functions1.c ft_dbl_list_functions2.c
