@@ -12,7 +12,7 @@ To compile the library clone the repository, go into the folder and type make. T
 ### Added functions
 
 Aside from the functions from my other projects this library also contains:
-- several functions dealing with doubly linked lists, similar to the ones alread in the library for singular lists
+- several functions dealing with doubly linked lists, similar to the ones already in the library for singular lists
 - functions dealing with arrays, including:
   - size of array
   - free array
