@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/07 09:29:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/20 13:49:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/21 09:32:38 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,7 +398,7 @@ void		ft_lstiter_dbl(t_list_dbl *lst, void (*f)(void *));
 /**
  * Writes given message on the standard error and then exits with errno
 */
-void	ft_exit_with_error(char *str, int error_code);
+void		ft_exit_with_error(char *str, int error_code);
 
 	//Get next line
 
@@ -427,8 +427,8 @@ char		*get_next_line(int fd);
  * introduced by the % character
  * The conversion will substitute the next aprameter of the function
  * in the spot the % character was.
- * Supported conversions are: d, i, s, c, x, X, %
- * Supported flags are: +, -, ' ', #, precision and width
+ * Supported conversions are: d, i, u, s, c, p, x, X, %
+ * Supported flags are: +, -, ' ', 0, #, precision and width
  * Lookup the printf manual for moe information
 */
 int			ft_printf(const char *s, ...);
