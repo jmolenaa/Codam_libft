@@ -8,7 +8,7 @@ SRC_FILES_PRINTF =	char_conversion.c decimal_conversion.c flag_functions.c flag_
 					hexa_conversion.c percent_conversion.c pointer_conversion.c string_conversion.c unsigned_conversion.c validation.c
 OBJFILES = $(SRC_FILES_LIBFT:%.c=obj/libft/%.o) $(SRC_FILES_GNL:%.c=obj/get_next_line/%.o) $(SRC_FILES_PRINTF:%.c=obj/printf/%.o)
 OBJDIR = obj
-DIRECTORIES = obj obj/libft obj/libft/chnstr/ obj/libft/mem obj/libft/lst obj/get_next_line obj/printf
+DIRECTORIES = obj obj/libft obj/get_next_line obj/printf
 CFLAGS ?= -Wall -Wextra -Werror
 CC = cc
 LIGHTGREEN=\033[1;32m
