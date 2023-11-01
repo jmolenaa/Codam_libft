@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/12 13:54:16 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/13 08:31:53 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/11/01 07:44:10 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**ft_insert_into_array(char **dst, char **src, size_t i)
 		*(new_cmd_array + j) = *(dst + j);
 		j++;
 	}
-	j = j + copy_array(new_cmd_array + j, src); 
+	j = j + copy_array(new_cmd_array + j, src);
 	j = j + copy_array(new_cmd_array + j, dst + i + 1);
 	free(dst);
 	dst = new_cmd_array;
