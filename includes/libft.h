@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/07 09:29:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/21 09:32:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/12/06 15:53:16 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,12 @@ char		*ft_strtrim(char const *s1, char const *set);
  * Returns a pointer to the new string or NULL on malloc failure
 */
 char		*ft_substr(char const *s, unsigned int start, size_t len);
+
+/**
+ * Will delete any occurance of any character in "del" out of the input string "str"
+ * the result is malloced and (*WARNING*) the original string is freed
+*/
+char		*ft_strdel(char *str, char *del);
 
 /**
  * Writes 'n' zero bytes to the memory pointed to by 's'
