@@ -34,7 +34,10 @@ char	*ft_strjoin_free_first(char const *s1, char const *s2)
 		return (NULL);
 	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
+	{
+		free((char *)s1);
 		return (NULL);
+	}
 	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
 	ft_strlcat(s3, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
 	free((char *)s1);
@@ -47,9 +50,12 @@ char	*ft_strjoin_free_second(char const *s1, char const *s2)
 
 	if (s1 == (NULL) || s2 == (NULL))
 		return (NULL);
-	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	s3 = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
+	{
+		free((char *)s2);
 		return (NULL);
+	}
 	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
 	ft_strlcat(s3, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
 	free((char *)s2);
@@ -62,9 +68,13 @@ char	*ft_strjoin_free_both(char const *s1, char const *s2)
 
 	if (s1 == (NULL) || s2 == (NULL))
 		return (NULL);
-	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	s3 = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (s3 == (NULL))
+	{
+		free((char *)s1);
+		free((char *)s2);
 		return (NULL);
+	}
 	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
 	ft_strlcat(s3, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
 	free((char *)s1);
