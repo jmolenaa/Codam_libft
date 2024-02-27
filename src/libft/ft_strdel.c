@@ -63,7 +63,7 @@ char	*ft_strdel(char *str, char *del)
 		return (str);
 	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
-		return (NULL);
+		return (free(str), NULL);
 	i = 0;
 	j = 0;
 	while (str[i])
